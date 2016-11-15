@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 const express = require('express');
@@ -40,12 +40,18 @@ app.get('/doit', function (req, expressRes) {
   options['method'] = 'POST';
   options['body'] = {
     'source_blob': {
-      'url': `https://api.github.com/repos/tomhardman0/heroku-auto/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}`,
+      'url': `https://api.github.com/repos/tomhardman0/greaterthan-design-template/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}`,
       'checksum': null,
       'version': 1
+    },
+    'overrides': {
+        'env': {
+          'APP_NAME': 'an app name',
+          'USER_EMAIL': 'tom@email.com',
+          'APP_INIT_PASSWORD': 'password'
+        }
     }
   };
-
   request(options, (err,res,body) => handleCreation(err,res,body,expressRes));
 });
 
