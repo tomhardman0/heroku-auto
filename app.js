@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const request = require('request');
+const timeout = require('connect-timeout');
 
 let baseHeaders = {
   'Accept': 'application/vnd.heroku+json; version=3',
@@ -56,6 +57,7 @@ app.get('/doit', function (req, expressRes) {
   request(options, (err,res,body) => handleCreation(err,res,body,expressRes));
 });
 
+app.use(timeout(12000000))
 app.listen(process.env.PORT || process.env.NODE_PORT || 3000, function () {
   console.log('Example app listening on port 3000!')
 });
