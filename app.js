@@ -26,7 +26,7 @@ app.get('/doit', function (req, resp) {
   options['method'] = 'POST';
   options['body'] = {
     'source_blob': {
-      'url': 'https://github.com/tomhardman0/heroku-auto/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}',
+      'url': 'https://api.github.com/repos/tomhardman0/heroku-auto/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}',
       'checksum': null,
       'version': 1
     },
