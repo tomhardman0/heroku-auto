@@ -1,0 +1,42 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
+const express = require('express');
+const app = express();
+const request = require('request');
+const herokuClient = require('./heroku-client');
+
+let baseHeaders = {
+  'Accept': 'application/vnd.heroku+json; version=3',
+  'Authorization': `Bearer ${process.env.HEROKU_API}`
+};
+
+
+const options = {
+  url: `${process.env.HEROKU_API_BASE}/app-setups`,
+  headers: baseHeaders
+};
+
+app.get('/', function (req, resp) {
+
+  options['json'] = true;
+  options['method'] = 'POST';
+  options['body'] = {
+    'source_blob': {
+      'url': 'https://github.com/tomhardman0/mimi/tarball/master',
+      'checksum': null,
+      'version': 1
+    },
+    'name': 'awfulbutshouldntexistalready'
+  };
+
+  request(options, (err, res, body) => {
+    if (err) throw new Error(err);
+    console.log(body);
+    resp.send(body)
+  });
+});
+
+app.listen(process.env.PORT || process.env.NODE_PORT || 3000, function () {
+  console.log('Example app listening on port 3000!')
+})
