@@ -29,8 +29,7 @@ app.get('/doit', function (req, resp) {
       'url': 'https://github.com/tomhardman0/heroku-auto/tarball/master',
       'checksum': null,
       'version': 1
-    },
-    'name': 'awfulbutshouldntexistalready'
+    }
   };
 
   request(options, (err, res, body) => {
