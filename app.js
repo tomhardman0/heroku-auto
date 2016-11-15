@@ -4,7 +4,6 @@ if (process.env.NODE_ENV === 'development') {
 const express = require('express');
 const app = express();
 const request = require('request');
-const herokuClient = require('./heroku-client');
 
 let baseHeaders = {
   'Accept': 'application/vnd.heroku+json; version=3',
