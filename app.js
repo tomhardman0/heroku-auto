@@ -52,6 +52,7 @@ app.get('/doit', function (req, expressRes) {
         }
     }
   };
+
   request(options, (err,res,body) => handleCreation(err,res,body,expressRes));
 });
 
