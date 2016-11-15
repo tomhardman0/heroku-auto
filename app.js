@@ -16,13 +16,17 @@ const options = {
   headers: baseHeaders
 };
 
-app.get('/', function (req, resp) {
+app.get('/', function(req, res) {
+  res.send('Hello world');
+});
+
+app.get('/doit', function (req, resp) {
 
   options['json'] = true;
   options['method'] = 'POST';
   options['body'] = {
     'source_blob': {
-      'url': 'https://github.com/tomhardman0/mimi/tarball/master',
+      'url': 'https://github.com/tomhardman0/heroku-auto/tarball/master',
       'checksum': null,
       'version': 1
     },
