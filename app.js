@@ -29,9 +29,6 @@ app.get('/doit', function (req, resp) {
       'url': 'https://api.github.com/repos/tomhardman0/heroku-auto/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}',
       'checksum': null,
       'version': 1
-    },
-    'app': {
-      'name': 'eggsboi'
     }
   };
 
