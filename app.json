@@ -11,6 +11,10 @@
     "TEMP_PASSWORD": {
       "description": "A temp password to login",
       "generator": "secret"
+    },
+    "NODE_ENV": {
+      "description": "what environment is the app running in",
+      "value": "production"
     }
   },
   "formation": {
