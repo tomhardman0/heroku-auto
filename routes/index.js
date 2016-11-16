@@ -11,4 +11,5 @@ const routes = {
 exports = module.exports = (app) => {
 	app.get('/', routes.views.index);
 	app.post('/signup', routes.views.signup);
+	app.get('/signup/:id', routes.views.signuppoll);
 };

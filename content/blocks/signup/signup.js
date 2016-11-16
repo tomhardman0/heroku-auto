@@ -1,5 +1,29 @@
+import request from 'browser-request';
+
 export default (app) => {
     const form = document.querySelector('.js-signup-form');
+
+    const options = {
+        method: 'POST',
+        url: '/signup'
+    };
+
+    const handleCreation = (err, res, body) => {
+      if (err) throw new Error(err);
+      body = JSON.parse(body);
+      
+      if (body.build && body.build.status === 'succeeded') {
+        console.log(body);
+      } else if (body.status === 'pending')  {
+        options['url'] = `/signup/${body.id}`;
+        options['method'] = 'GET';
+        delete options.body;
+
+        setTimeout(() => {
+          request(options, handleCreation);
+        }, 1000);
+      }
+    };
 
     const handleSubmission = (e) => {
         e.preventDefault();
@@ -10,19 +34,9 @@ export default (app) => {
             email: email,
             password: password
         };
+        options['body'] = JSON.stringify(data);
 
-        const req = new XMLHttpRequest();
-        req.onreadystatechange = (res) => {
-            if (res.currentTarget.readyState == 4 && res.currentTarget.status == 200) {
-                console.log(JSON.parse(res.currentTarget.responseText));
-            }
-        };
-
-        req.open('POST', '/signup');
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send(JSON.stringify(data));
-
-        console.log(e);
+        request(options, handleCreation);
     }
 
     form.addEventListener('submit', handleSubmission);
