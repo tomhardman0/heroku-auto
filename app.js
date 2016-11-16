@@ -1,61 +1,53 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+	require('dotenv').config();
 }
-const express = require('express');
-const app = express();
-const request = require('request');
 
-let baseHeaders = {
-  'Accept': 'application/vnd.heroku+json; version=3',
-  'Authorization': `Bearer ${process.env.HEROKU_API}`
-};
+const keystone = require('keystone');
+const appInit = require('./init/new_admin');
 
-const options = {
-  url: `${process.env.HEROKU_API_BASE}/app-setups`,
-  headers: baseHeaders
-};
+let staticOptions = {};
+if (process.env.NODE_ENV === 'production') {
+	staticOptions['maxAge'] = 8640000000;
+}
 
-const handleCreation = (err, res, body, expressRes) => {
-  if (err) throw new Error(err);
-
-  if (body.build && body.build.status === 'succeeded') {
-    expressRes.send(body)
-  } else if (body.status === 'pending')  {
-    options.url = `${process.env.HEROKU_API_BASE}/app-setups/${body.id}`;
-    options.method = 'GET';
-    delete options.body;
-    setTimeout(() => {
-      request(options, (err,res,body) => handleCreation(err,res,body,expressRes));
-    }, 1000);
-  }
-};
-
-app.get('/', function(req, res) {
-  res.send('Hello world');
+keystone.init({
+	'name': 'Greater Than - Design',
+	'brand': 'Greater Than - Design',
+	'static': 'dist',
+	'static options': staticOptions,
+	'favicon': 'dist/images/favicon.ico',
+	'views': 'content/views',
+	'view engine': 'jade',
+	'auto update': false,
+	'session': true,
+	'auth': true,
+	'user model': 'User',
+	'compress': true,
+	// 'cloudinary config': process.env.CLOUNDINARY_URL,
+	// 'cloudinary secure': true,
+	// 'cloudinary folders': true
 });
 
-app.get('/doit', function (req, expressRes) {
+keystone.import('models');
 
-  options['json'] = true;
-  options['method'] = 'POST';
-  options['body'] = {
-    'source_blob': {
-      'url': `https://api.github.com/repos/tomhardman0/greaterthan-design-template/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}`,
-      'checksum': null,
-      'version': 1
-    },
-    'overrides': {
-        'env': {
-          'APP_NAME': 'an app name',
-          'USER_EMAIL': 'tom@email.com',
-          'APP_INIT_PASSWORD': 'password'
-        }
-    }
-  };
-
-  request(options, (err,res,body) => handleCreation(err,res,body,expressRes));
+keystone.set('locals', {
+	env: keystone.get('env'),
+	utils: keystone.utils,
+	editable: keystone.content.editable,
 });
 
-app.listen(process.env.PORT || process.env.NODE_PORT || 3000, function () {
-  console.log('Example app listening on port 3000!')
+keystone.set('routes', require('./routes'));
+
+keystone.set('nav', {
+	users: 'users',
 });
+
+keystone.set('port', process.env.PORT || process.env.NODE_PORT || 3500);
+keystone.set('env', process.env.NODE_ENV || 'development');
+keystone.set('mongo', process.env.MONGODB_URI || `mongodb://localhost:27017/${process.env.APP_NAME}`);
+keystone.set('session store', 'mongo');
+
+keystone.start();
+
+// If no admin user exists in db, create one.
+appInit.newAdmin();

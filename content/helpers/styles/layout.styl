@@ -1,0 +1,68 @@
+color-purple = #A50050
+midAnimWidth = 1441px
+desktop = 1025px
+tablet = 415px
+mobile = 321px
+bezier = cubic-bezier(0,0,.58,1)
+
+body
+  overflow-x: hidden
+
+a, p
+  color: color-purple
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+.container
+  margin: 0 auto
+  width: 90%
+
+._table
+  display: table
+  width: 100%
+  height: 100%
+
+._table__valign
+  display: table-cell
+  text-align: center
+  vertical-align: middle
+
+a
+  color: color-purple
+  opacity: 0.6
+  text-decoration: none
+  transition: opacity 0.3s
+
+  &:after
+    content: '';
+    display: block;
+    position: relative;
+    bottom: -3px;
+    height: 2px;
+    margin: 0 auto;
+    width: 96%;
+    background-color: #a50050;
+    color: #a50050;
+    opacity: 0;
+    transition: opacity 0.3s
+
+  &:hover
+    opacity: 1
+    &:after
+      opacity: 1
+
+.helper-clear
+  clear: both
+
+.fade-in
+  opacity: 1
+
+.entrance-fade-in
+  opacity: 0
+  animation: fadeIn 0.3s bezier 0.1s 1 normal forwards
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
