@@ -5,13 +5,13 @@ export default (app) => {
 
     const options = {
         method: 'POST',
-        url: '/signup'
+        url: '/signup',
+        json: true
     };
 
     const handleCreation = (err, res, body) => {
       if (err) throw new Error(err);
-      body = JSON.parse(body);
-      
+
       if (body.build && body.build.status === 'succeeded') {
         console.log(body);
       } else if (body.status === 'pending')  {
@@ -34,8 +34,8 @@ export default (app) => {
             email: email,
             password: password
         };
-        options['body'] = JSON.stringify(data);
-
+        options['body'] = data;
+        console.log(options)
         request(options, handleCreation);
     }
 

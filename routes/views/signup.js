@@ -23,8 +23,8 @@ const signUpRoute = (req, userRes) => {
 	  'overrides': {
 		  'env': {
 			'APP_NAME': 'an app name',
-			'USER_EMAIL': req.params.email,
-			'APP_INIT_PASSWORD': req.params.password
+			'USER_EMAIL': req.body.email,
+			'APP_INIT_PASSWORD': req.body.password
 		  }
 	  }
 	};
