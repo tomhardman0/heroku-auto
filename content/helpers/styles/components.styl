@@ -3,14 +3,19 @@
   width: 100vw
   height: 100vh
 
-a
+.button
   display: inline-block
   cursor: pointer
   text-decoration: none
-  padding: 5px 10px
-  background-color: color-blue
-  border: 5px rgba(0,0,0,0) solid
+  padding: 10px 15px
+  margin: 0 10px
+  background-color: white
+  color: color-blue
   transition: transform 0.15s bezier
   transform: scale(1.00)
   &:hover
     transform: scale(1.10)
+
+.button--cta
+  background-color: color-blue
+  color: white
