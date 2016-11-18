@@ -1,10 +1,12 @@
 import _ from 'underscore';
 import async from 'async';
 
+import landing from './blocks/landing/landing';
 import signUp from './blocks/signup/signup';
 
 const controllers = [
-    signUp
+    signUp,
+    landing
 ];
 
 const app = window.app = {};
