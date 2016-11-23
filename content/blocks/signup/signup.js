@@ -3,6 +3,17 @@ import request from 'browser-request';
 export default (app) => {
     const form = document.querySelector('.js-signup-form');
 
+    const fadeInForm = (e) => {
+        console.log(window.pageYOffset, ((70/100) * window.innerHeight))
+        if (window.pageYOffset > ((70/100) * window.innerHeight)) {
+            Array.prototype.forEach.call(form.elements, (elem, i) => {
+                setTimeout(() => {
+                    elem.classList.add('signup--fade-in');
+                }, (i+1)*150);
+            });
+        }
+    };
+
     const options = {
         method: 'POST',
         url: '/signup',
@@ -40,4 +51,5 @@ export default (app) => {
     }
 
     form.addEventListener('submit', handleSubmission);
+    window.addEventListener('scroll', fadeInForm, false);
 }

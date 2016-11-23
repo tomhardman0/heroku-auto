@@ -1,12 +1,26 @@
 .section--signup
-  background-color: color-blue
-  // background-image: url('/images/sections/signup-background.jpg')
-  // background-size: cover
-  // background-attachment: fixed
+  background-color: color-main
 
 .signup__form
-  width: 60%
+  width: 30%
+  margin: 0 auto
 
+.signup__button,
 .signup__input
-  width: 100%
-  padding: 5px
+  transform: translateX(-10px)
+  opacity: 0
+
+.signup__button
+  background-color: color-second
+  color: white
+
+.signup--fade-in
+  animation: fadeInFromLeft 0.2s bezier 0.1s 1 normal forwards
+
+@keyframes fadeInFromLeft
+  0%
+    opacity: 0
+    transform: translateX(-10px)
+  100%
+    opacity: 1
+    transform: translateX(0)

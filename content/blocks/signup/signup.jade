@@ -3,6 +3,8 @@
     ._table__valign
 
       form.js-signup-form.signup__form
-        input(type="text" placeholder="Email" name="email").signup__input
-        input(type="password" placeholder="password" name="password").signup__input
-        button(type="submit").signup__button Sign up
+        input(type="text" placeholder="Name" name="name" required).signup__input.input
+        input(type="text" placeholder="Email" name="email" required="email").signup__input.input
+        input(type="password" placeholder="Password" name="password" required).signup__input.input
+        input(type="text" placeholder="Website Name" name="webname" required).signup__input.input
+        button(type="submit").signup__button.input Sign up
