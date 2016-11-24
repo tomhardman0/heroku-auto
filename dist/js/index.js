@@ -3333,13 +3333,21 @@ var signUp = (function (app) {
     var form = document.querySelector('.js-signup-form');
 
     var fadeInForm = function fadeInForm(e) {
-        console.log(window.pageYOffset, 70 / 100 * window.innerHeight);
-        if (window.pageYOffset > 70 / 100 * window.innerHeight) {
+        if (window.pageYOffset > window.innerHeight) {
             Array.prototype.forEach.call(form.elements, function (elem, i) {
                 setTimeout(function () {
                     elem.classList.add('signup--fade-in');
                 }, (i + 1) * 150);
             });
+
+            setTimeout(function () {
+                Array.prototype.forEach.call(form.elements, function (elem, i) {
+                    elem.classList.remove('signup--fade-in');
+                    elem.style.opacity = 1;
+                });
+            }, 760);
+
+            window.removeEventListener('scroll', fadeInForm, false);
         }
     };
 
