@@ -11,7 +11,7 @@ const signUpRoute = (req, res) => {
     heroku.signUp(envOverrides)
           .then((body) => {
               console.log(body)
-          })
+          });
 };
 
 exports = module.exports = signUpRoute;

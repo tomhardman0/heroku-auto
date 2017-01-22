@@ -12,12 +12,10 @@ class Heroku {
         };
 
         return new Promise(function(resolve, reject) {
-
             request(options, (err, res, body) => {
         		if (err) reject(err);
                 else resolve(body);
         	});
-
         });
     }
 
