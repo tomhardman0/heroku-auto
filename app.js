@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const keystone = require('keystone');
 const appInit = require('./init/new_admin');
+const herokuClient = require('./clients/heroku');
 
 let staticOptions = {};
 if (process.env.NODE_ENV === 'production') {
@@ -35,6 +36,10 @@ keystone.set('locals', {
 	utils: keystone.utils,
 	editable: keystone.content.editable,
 });
+
+keystone.serviceClients = {
+	'heroku': new herokuClient()
+};
 
 keystone.set('routes', require('./routes'));
 
