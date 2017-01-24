@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import async from 'async';
 
 import landing from './blocks/landing/landing';

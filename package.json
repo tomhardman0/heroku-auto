@@ -6,11 +6,9 @@
     "async": "^1.5.0",
     "babel-preset-es2015-rollup": "^1.2.0",
     "browser-request": "^0.3.3",
-    "connect-mongo": "^1.3.2",
+    "contentful": "^3.8.0",
     "dotenv": "^2.0.0",
-    "eslint": "^2.12.0",
-    "eslint-config-keystone": "^2.3.1",
-    "eslint-plugin-react": "^5.1.1",
+    "express": "^4.14.0",
     "gulp": "^3.7.0",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-cssmin": "^0.1.7",
@@ -18,21 +16,20 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylus": "^2.1.0",
     "gulp-watch": "^4.3.5",
-    "keystone": "^0.3.19",
     "lodash": "^4.13.1",
+    "pug": "^2.0.0-beta7",
     "request": "^2.78.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^5.0.4",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-uglify": "^1.0.1",
-    "rupture": "^0.6.1",
-    "underscore": "^1.8.3"
+    "rupture": "^0.6.1"
   },
   "scripts": {
     "start": "NODE_ENV=development node app.js"
   },
   "engines": {
-    "node": "v6.7.0",
-    "npm": "v3.10.3"
+    "node": "v7.4.0",
+    "npm": "v4.0.5"
   }
 }

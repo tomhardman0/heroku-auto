@@ -2,57 +2,28 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
-const keystone = require('keystone');
-const appInit = require('./init/new_admin');
-const herokuClient = require('./clients/heroku');
+const path = require('path');
+const express = require('express');
+const app = express();
 
-let staticOptions = {};
-if (process.env.NODE_ENV === 'production') {
-	staticOptions['maxAge'] = 8640000000;
-}
-
-keystone.init({
-	'name': 'Greater Than - Design',
-	'brand': 'Greater Than - Design',
-	'static': 'dist',
-	'static options': staticOptions,
-	'favicon': 'dist/images/favicon.ico',
-	'views': 'content/views',
-	'view engine': 'jade',
-	'auto update': false,
-	'session': true,
-	'auth': true,
-	'user model': 'User',
-	'compress': true,
-	// 'cloudinary config': process.env.CLOUNDINARY_URL,
-	// 'cloudinary secure': true,
-	// 'cloudinary folders': true
+// Clients
+const Heroku = require('./clients/heroku');
+const Contentful = require('contentful').createClient({
+	'space': process.env.CONTENTFUL_SPACE,
+	'accessToken': process.env.CONTENTFUL_DELIVERY_TOKEN
 });
-
-keystone.import('models');
-
-keystone.set('locals', {
-	env: keystone.get('env'),
-	utils: keystone.utils,
-	editable: keystone.content.editable,
-});
-
-keystone.serviceClients = {
-	'heroku': new herokuClient()
+app.locals.clients = {
+	heroku: new Heroku(),
+	contentful: Contentful
 };
 
-keystone.set('routes', require('./routes'));
+app.use('/assets', express.static(path.join(__dirname, 'dist')));
+require('./routes')(app);
+app.set('view engine', 'pug');
 
-keystone.set('nav', {
-	users: 'users',
+app.locals.name = process.env.APP_NAME;
+
+const port = process.env.PORT || process.env.NODE_PORT || 3500;
+app.listen(port, () => {
+	console.log(`Greater Than Design now running on ${port}`);
 });
-
-keystone.set('port', process.env.PORT || process.env.NODE_PORT || 3500);
-keystone.set('env', process.env.NODE_ENV || 'development');
-keystone.set('mongo', process.env.MONGODB_URI || `mongodb://localhost:27017/${process.env.APP_NAME}`);
-keystone.set('session store', 'mongo');
-
-keystone.start();
-
-// If no admin user exists in db, create one.
-appInit.newAdmin();
