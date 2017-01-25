@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const path = require('path');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 // clients and config
 const Heroku = require('./clients/heroku');
@@ -16,10 +17,11 @@ app.locals.clients = {
 	contentful: new Contentful(contentfulConfig)
 };
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/assets', express.static(path.join(__dirname, 'dist')));
 require('./routes')(app);
 app.set('views', path.join(__dirname, 'content', 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 
 app.locals.name = process.env.APP_NAME;
 
