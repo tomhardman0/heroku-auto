@@ -6,7 +6,7 @@
     "async": "^1.5.0",
     "babel-preset-es2015-rollup": "^1.2.0",
     "browser-request": "^0.3.3",
-    "contentful": "^3.8.0",
+    "contentful-management": "^1.3.1",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "gulp": "^3.7.0",
@@ -26,7 +26,7 @@
     "rupture": "^0.6.1"
   },
   "scripts": {
-    "start": "NODE_ENV=development node app.js"
+    "start": "NODE_ENV=development node app.js --harmony-async-await"
   },
   "engines": {
     "node": "v7.4.0",

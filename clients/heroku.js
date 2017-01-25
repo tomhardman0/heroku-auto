@@ -1,8 +1,9 @@
 const request = require('request');
 
 class Heroku {
-    constructor() {
-
+    constructor(config) {
+        this.baseUrl = config.baseUrl;
+        this.apiKey = config.apiKey;
     }
 
     signUp(envOverrides) {
@@ -29,7 +30,7 @@ class Heroku {
 
     _getSignUpOptions() {
         return {
-            'url': `${process.env.HEROKU_API_BASE}/app-setups`,
+            'url': `${this.baseUrl}/app-setups`,
             'headers': this._getBaseHeaders(),
             'json': true,
             'method': 'POST',
@@ -47,7 +48,7 @@ class Heroku {
     _getBaseHeaders() {
         return {
             'Accept': 'application/vnd.heroku+json; version=3',
-            'Authorization': `Bearer ${process.env.HEROKU_API}`
+            'Authorization': `Bearer ${this.apiKey}`
         };
     }
 }

@@ -1,6 +1,6 @@
 const homeRoute = (app) => {
 	app.get('/', (req, res) => {
-		res.render('', {
+		res.render('index', {
 			'title': app.locals.name
 		})
 	});
