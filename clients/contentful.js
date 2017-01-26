@@ -14,7 +14,8 @@ class Contentful {
     }
 
     async _getSpace() {
-        return await this.client.getSpace(this.spaceId);
+        this.space = this.space || await this.client.getSpace(this.spaceId);
+        return this.space;
     }
 
 }
