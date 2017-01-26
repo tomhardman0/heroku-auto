@@ -6,6 +6,12 @@ class Contentful {
             'accessToken': config.accessToken
         });
         this.spaceId = config.spaceId;
+        this.userContentTypeId = '3Zshhv8HwMPqoiXpyo1644';
+    }
+
+    async createUser(newUser) {
+        const space = await this._getSpace();
+        const newUser = await space.createEntry(this.userContentTypeId, newUser);
     }
 
     async _getEntries() {
