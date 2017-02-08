@@ -17,14 +17,14 @@ const rupture = require('rupture');
 
 const paths = {
 	'js': {
-		main: './content/index.js',
-		all: './content/**/*.js',
-		output: './dist/js/'
+		main: './client/content/index.js',
+		all: './client/content/**/*.js',
+		output: './client/dist/js/'
 	},
 	'style': {
-		main: './content/index.styl',
-		all: './content/**/*.styl',
-		output: './dist/css/'
+		main: './client/content/index.styl',
+		all: './client/content/**/*.styl',
+		output: './client/dist/css/'
 	}
 };
 

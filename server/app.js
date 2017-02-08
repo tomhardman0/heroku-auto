@@ -15,9 +15,9 @@ app.locals.clients = {
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/assets', express.static(path.join(__dirname, 'dist')));
+app.use('/assets', express.static(path.join(__dirname, '..', 'client', 'dist')));
 require('./routes')(app);
-app.set('views', path.join(__dirname, 'content', 'views'));
+app.set('views', path.join(__dirname, '..', 'client', 'content', 'views'));
 app.set('view engine', 'jade');
 
 app.locals.name = process.env.APP_NAME;
