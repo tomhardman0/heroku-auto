@@ -17,6 +17,7 @@
     "gulp-watch": "^4.3.11",
     "jade": "^1.11.0",
     "lodash": "^4.17.4",
+    "pg": "^6.1.2",
     "request": "^2.79.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^7.0.0",
