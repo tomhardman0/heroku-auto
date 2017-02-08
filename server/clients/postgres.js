@@ -9,12 +9,18 @@ class Postgres {
         const db = await this._getClient();
         const dataArr = [data.name, data.email, data.appName, false];
 
-        db.client.query(this._getCreateUserQuery(data), dataArr);
-        db.client.query(this._getSelectUserByEmailQuery(), [data.email], (err, result) => {
-            if (err) throw new Error(err);
+        const create = await this._query(db.client, this._getCreateUserQuery(data), dataArr);
 
-            done();
-            return result;
+        db.done();
+        return create;
+    }
+
+    _query(client, query, data) {
+        return new Promise((resolve, reject) => {
+            client.query(query, data, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
         });
     }
 
