@@ -1,9 +1,16 @@
 const signUpPollRoute = (app) => {
     const heroku = app.locals.clients.heroku;
 
-    app.get('/signuppoll/:id', async (req, res) => {
+    app.get('/signup/:id', async (req, res) => {
         const data = await heroku.signUpPoll(req.params.id);
-        res.send(data);
+        const response = {
+            'status': data.status,
+            'build': data.build,
+            'id': data.id,
+            'app': data.app
+        };
+
+        res.send(response);
     });
 
 };

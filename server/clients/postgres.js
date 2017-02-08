@@ -1,47 +1,52 @@
-const pg = require('pg');
+const Sequelize = require('sequelize');
 
 class Postgres {
     constructor(config) {
         this.dbUrl = config.dbUrl;
+        this.client = new Sequelize(this.dbUrl);
+
+        this._createUserModel();
+        this._syncTables();
     }
 
-    async createUser(data) {
-        const db = await this._getClient();
-        const dataArr = [data.name, data.email, data.appName, false];
-
-        const create = await this._query(db.client, this._getCreateUserQuery(data), dataArr);
-
-        db.done();
-        return create;
-    }
-
-    _query(client, query, data) {
-        return new Promise((resolve, reject) => {
-            client.query(query, data, (err, result) => {
-                if (err) reject(err);
-                resolve(result);
-            });
+    createUser(data) {
+        return this.User.findOrCreate({
+            'where': { 'email': data.email },
+            'defaults': data
+        }).spread((user, created) => {
+            if (created) return user.get({ 'plain': true });
+            else throw new Error('Cant create new user');
         });
     }
 
-    _getClient() {
-        return new Promise((resolve, reject) => {
-            pg.connect(this.dbUrl, (err, client, done) => {
-                if (err) {
-                    done();
-                    reject(err);
-                }
+    async updateUser(email, data) {
+        const user = await this.User.findOne({
+            'where': { 'email': email }
+        });
 
-                resolve({client, done});
+        return user.update(data)
+            .then((user) => {
+                return user.get({ 'plain': true });
             });
+    }
+
+    _createUserModel() {
+        this.User = this.client.define('user', {
+            name: Sequelize.STRING,
+            email: Sequelize.STRING,
+            appName: Sequelize.STRING,
+            url: Sequelize.STRING,
+            appId: Sequelize.STRING,
+            active: Sequelize.BOOLEAN
+        }, {
+          freezeTableName: true
         });
     }
 
-    _getCreateUserQuery() {
-        return 'INSERT INTO users(name, email, appName, active) values($1, $2, $3, $4)';
+    _syncTables() {
+        this.User.sync({force: true});
     }
 
-    _getSelectUserByEmailQuery() {
-        return `SELECT * FROM users WHERE email='$1'`;
-    }
 }
+
+module.exports = Postgres;

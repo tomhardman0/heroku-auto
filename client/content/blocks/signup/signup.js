@@ -14,9 +14,19 @@ export default (app) => {
 
       if (body.build && body.build.status === 'succeeded') {
         console.log('finished body:', body);
+        options['method'] = 'POST';
+        options['url'] = '/signup/complete';
+        options['body'] = {
+            'email': form.elements['email'].value,
+            'url': body.app.name,
+            'appId': body.app.id
+        };
+        request(options, (eggs, rear, boo) => {
+            console.log(boo);
+        });
       } else if (body.status === 'pending')  {
         console.log('poll body:', body);
-        options['url'] = `/signuppoll/${body.id}`;
+        options['url'] = `/signup/${body.id}`;
         options['method'] = 'GET';
         delete options.body;
 
@@ -41,7 +51,6 @@ export default (app) => {
         };
         options['body'] = data;
         options['url'] = '/signup';
-        console.log('sign up options:', options)
         request(options, handleCreation);
     }
 
