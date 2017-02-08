@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import async from 'async';
 
+import smoothScroll from 'smoothscroll-polyfill';
+smoothScroll.polyfill();
+
 import landing from './blocks/landing/landing';
 import signUp from './blocks/signup/signup';
 
