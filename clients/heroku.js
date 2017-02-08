@@ -4,6 +4,7 @@ class Heroku {
     constructor(config) {
         this.baseUrl = config.baseUrl;
         this.apiKey = config.apiKey;
+        this.gitAccessToken = config.gitAccessToken;
     }
 
     signUp(envOverrides) {
@@ -12,11 +13,22 @@ class Heroku {
             'env': envOverrides
         };
 
-        return new Promise(function(resolve, reject) {
+        return this._getRequestPromise(options);
+    }
+
+    signUpPoll(pollId) {
+        const options = this._getSignUpPollOptions();
+        options['url'] = `${this.baseUrl}/app-setups/${pollId}`;
+
+        return this._getRequestPromise(options);
+    }
+
+    _getRequestPromise(options) {
+        return new Promise((resolve, reject) => {
             request(options, (err, res, body) => {
-        		if (err) reject(err);
+                if (err) reject(err);
                 else resolve(body);
-        	});
+            });
         });
     }
 
@@ -36,7 +48,7 @@ class Heroku {
             'method': 'POST',
             'body': {
                 'source_blob': {
-                    'url': `https://api.github.com/repos/tomhardman0/greaterthan-design-template/tarball/master?access_token=${process.env.GIT_ACCESS_TOKEN}`,
+                    'url': `https://api.github.com/repos/tomhardman0/greaterthan-design-template/tarball/master?access_token=${this.gitAccessToken}`,
                     'checksum': null,
                     'version': 1
                 },

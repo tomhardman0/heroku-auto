@@ -1,11 +1,9 @@
 const signUpPollRoute = (app) => {
+    const heroku = app.locals.clients.heroku;
 
-    app.get('/signupinfo', (req, res) => {
-        options['url'] = `${process.env.HEROKU_API_BASE}/app-setups/${req.params.id}`
-
-        request(options, (err, res, body) => {
-            userRes.send(body);
-        });
+    app.get('/signuppoll/:id', async (req, res) => {
+        const data = await heroku.signUpPoll(req.params.id);
+        res.send(data);
     });
 
 };

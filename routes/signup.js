@@ -3,9 +3,9 @@ const signUpRoute = (app) => {
 
     app.post('/signup', async (req, res) => {
         const envOverrides = {
-    		'APP_NAME': 'an app name',
-    		'USER_EMAIL': req.body.email,
-    		'APP_INIT_PASSWORD': req.body.password
+        		'APP_NAME': 'an app name',
+        		'USER_EMAIL': req.body.email,
+        		'APP_INIT_PASSWORD': req.body.password
         };
 
         const data = await heroku.signUp(envOverrides);
