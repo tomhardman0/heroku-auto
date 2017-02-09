@@ -6,25 +6,32 @@ export default class Api {
     }
 
     signUp(data) {
+        this.userInfo.email = data.email;
         const options = this._getSignUpOptions();
         options['body'] = data;
-        return this._getRequestPromise(options);
+        return this._getRequestPromise(options)
+            .then(this.signUpPoll.bind(this));
     }
 
     signUpPoll(data) {
-        const options = this._getSignUpPollOptions(data.id);
+        const options = this._getSignUpPollOptions(data);
         return this._getRequestPromise(options)
             .then(this._signUpPoll.bind(this));
     };
 
     _signUpPoll(data){
         data = JSON.parse(data);
-        if (data.build && data.build.status === 'succeeded') {
-            const options = this._getSignUpCompleteOptions(data);
-            return this._getRequestPromise(options);
-        } else if (data.status === 'pending') {
-            return setTimeout(() => this.signUpPoll(data), 1000);
-        }
+
+        return new Promise((resolve, reject) => {
+            if (data.build && data.build.status === 'succeeded') {
+                const options = this._getSignUpCompleteOptions(data);
+                this._getRequestPromise(options).then(resolve);
+            } else if (data.status === 'pending') {
+                setTimeout(() => {
+                    this.signUpPoll(data).then(resolve);
+                }, 1000);
+            }
+        });
     }
 
     _getRequestPromise(options) {
@@ -44,20 +51,21 @@ export default class Api {
         };
     }
 
-    _getSignUpPollOptions(id) {
+    _getSignUpPollOptions(data) {
         return {
             'method': 'GET',
-            'url': `/signup/${id}`,
+            'url': `/signup/${data.id}`
         };
     }
 
     _getSignUpCompleteOptions(data) {
         return {
-            'method': 'GET',
+            'method': 'POST',
             'url': '/signup/complete',
+            'json': true,
             'body': {
                 'email': this.userInfo.email,
-                'url': data.app.name,
+                'url': `https://${data.app.name}.herokuapp.com`,
                 'appId': data.app.id
             }
         };

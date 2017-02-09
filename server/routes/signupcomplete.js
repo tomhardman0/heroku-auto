@@ -10,7 +10,8 @@ const signUpCompleteRoute = (app) => {
         });
 
         const response = {
-            done: true
+            done: true,
+            'url': updatedUser.url
         };
         res.send(response);
     });
