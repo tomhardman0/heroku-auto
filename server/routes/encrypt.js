@@ -6,3 +6,5 @@ const encryptRoute = (app) => {
         res.send(letsEncryptReponse);
     });
 }
+
+exports = module.exports = encryptRoute;
