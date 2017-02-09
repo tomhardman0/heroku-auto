@@ -1,0 +1,31 @@
+
+.loading__cont
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  opacity: 0
+
+.loading__dot
+  width: 20px
+  height: 20px
+  background-color: transparent
+  border: 2px solid white
+  border-radius: 50%
+  float: left
+  margin: 0 10px
+  transform: scale(0)
+  animation: fx 1s ease infinite 0ms
+  &:nth-child(2)
+    animation: fx 1s ease infinite 250ms
+  &:nth-child(3)
+    animation: fx 1s ease infinite 500ms
+  &:nth-child(4)
+    animation: fx 1s ease infinite 750ms
+
+@keyframes fx
+  50%
+    transform: scale(1)
+    opacity: 1
+  100%
+    opacity: 0

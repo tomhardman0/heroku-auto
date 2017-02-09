@@ -4,6 +4,8 @@ import async from 'async';
 import smoothScroll from 'smoothscroll-polyfill';
 smoothScroll.polyfill();
 
+import Api from '../clients/api';
+
 import landing from './blocks/landing/landing';
 import signUp from './blocks/signup/signup';
 
@@ -13,6 +15,10 @@ const controllers = [
 ];
 
 const app = window.app = {};
+
+app.clients = {
+    api: new Api()
+}
 
 app.utils = {
     _,

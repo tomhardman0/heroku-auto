@@ -18,7 +18,7 @@ const rupture = require('rupture');
 const paths = {
 	'js': {
 		main: './client/content/index.js',
-		all: './client/content/**/*.js',
+		all: './client/**/**/*.js',
 		output: './client/dist/js/'
 	},
 	'style': {
