@@ -3,10 +3,11 @@
     ._table__valign
 
       form.js-signup-form.signup__form
-        input(type="text" placeholder="Name" name="name" required).signup__input.input
-        input(type="text" placeholder="Email" name="email" required="email").signup__input.input
-        input(type="password" placeholder="Password" name="password" required).signup__input.input
-        input(type="text" placeholder="App Name" name="appName" required).signup__input.input
+        .form-el-cont.js-form-el-cont
+          input(type="text" placeholder="Name" name="name" required).signup__input.input
+          input(type="text" placeholder="Email" name="email" required="email").signup__input.input
+          input(type="password" placeholder="Password" name="password" required).signup__input.input
+          input(type="text" placeholder="App Name" name="appName" required).signup__input.input
         button(type="submit").signup__button.input
           span.signup__button__text.js-signup-button-text Sign up
           .loading__cont.js-loader

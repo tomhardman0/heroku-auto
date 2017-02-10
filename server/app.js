@@ -27,6 +27,4 @@ app.set('view engine', 'jade');
 
 app.locals.name = process.env.APP_NAME;
 
-app.listen(port, () => {
-	console.log(`Greater Than Design now running on ${port}`);
-});
+app.listen(port, () => console.log(`Greater Than Design now running on ${port}`));
