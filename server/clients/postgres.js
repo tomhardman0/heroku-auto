@@ -39,7 +39,7 @@ class Postgres {
             appId: Sequelize.STRING,
             active: Sequelize.BOOLEAN
         }, {
-          freezeTableName: true
+            freezeTableName: true
         });
     }
 
