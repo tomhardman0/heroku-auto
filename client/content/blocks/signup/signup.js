@@ -1,6 +1,7 @@
 import request from 'browser-request';
 
 export default (app) => {
+    const form = document.querySelector('.js-signup-form');
 
     const hideInputElms = () => {
         const buttonText = document.querySelector('.js-signup-button-text');
@@ -13,7 +14,6 @@ export default (app) => {
     };
 
     const getFormInput = () => {
-        const form = document.querySelector('.js-signup-form');
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
         const name = form.elements['name'].value;
