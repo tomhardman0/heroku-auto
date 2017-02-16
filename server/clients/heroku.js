@@ -8,18 +8,17 @@ class Heroku {
     }
 
     signUp(envOverrides) {
-        const options = this._getSignUpOptions();
-        options['body']['overrides'] = {
-            'env': envOverrides
-        };
-
+        const options = this._getSignUpOptions(envOverrides);
         return this._getRequestPromise(options);
     }
 
     signUpPoll(pollId) {
-        const options = this._getSignUpPollOptions();
-        options['url'] = `${this.baseUrl}/app-setups/${pollId}`;
+        const options = this._getSignUpPollOptions(pollId);
+        return this._getRequestPromise(options);
+    }
 
+    _setCustomDomain(data) {} {
+        const options = this._getCustomDomainOptions(data);
         return this._getRequestPromise(options);
     }
 
@@ -32,15 +31,16 @@ class Heroku {
         });
     }
 
-    _getSignUpPollOptions() {
+    _getSignUpPollOptions(pollId) {
         return {
             'headers': this._getBaseHeaders(),
             'json': true,
-            'method': 'GET'
+            'method': 'GET',
+            'url': `${this.baseUrl}/app-setups/${pollId}`
         };
     }
 
-    _getSignUpOptions() {
+    _getSignUpOptions(envOverrides) {
         return {
             'url': `${this.baseUrl}/app-setups`,
             'headers': this._getBaseHeaders(),
@@ -52,9 +52,19 @@ class Heroku {
                     'checksum': null,
                     'version': 1
                 },
-                'overrides': {}
+                'overrides': { 'env': envOverrides }
             }
         };
+    }
+
+    _getCustomDomainOptions(data) {
+        return {
+            'headers': this._getBaseHeaders(),
+            'url': `${this.baseUrl}/apps/${data.id}/domains`,
+            'json': true,
+            'method': 'POST',
+            'body': data.body
+        }
     }
 
     _getBaseHeaders() {

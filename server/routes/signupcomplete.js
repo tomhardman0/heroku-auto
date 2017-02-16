@@ -4,7 +4,7 @@ const signUpCompleteRoute = (app) => {
     app.post('/signup/complete', async (req, res) => {
 
         const updatedUser = await postgres.updateUser(req.body.email, {
-    		'active': true,
+    		    'active': true,
             'url': req.body.url,
             'appId': req.body.appId
         });
