@@ -1,6 +1,7 @@
 .section--landing
-  background-image: url('../images/sections/landing-background.jpg')
-  background-size: cover
+  // background-image: url('../images/sections/landing-background.jpg')
+  // background-size: cover
+  background-color: color-blue
   // background-attachment: fixed
 
 .landing__top-bar
@@ -9,5 +10,28 @@
   left: 0
   width: 100%
   height: 6px
-  background-color: color-blue
+  background-color: black
   z-index: 10
+
+.landing__h1
+  margin-bottom: 15px
+
+.landing__h1__dot
+  color: color-pink
+  transform-origin: 50% 87.4%
+  display: inline-block
+  // transition: transform 0.2s
+  animation-name: spin
+  animation-duration: 5s
+  animation-timing-function: ease
+  animation-iteration-count: infinite
+  animation-direction: normal
+  animation-fill-mode: forwards
+
+  @keyframes spin
+    0%
+      transform: rotate(0deg)
+    90%
+      transform: rotate(0deg)
+    100%
+      transform: rotate(90deg)
