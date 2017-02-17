@@ -17,7 +17,7 @@ class Heroku {
         return this._getRequestPromise(options);
     }
 
-    _setCustomDomain(data) {} {
+    _setCustomDomain(data) {
         const options = this._getCustomDomainOptions(data);
         return this._getRequestPromise(options);
     }
