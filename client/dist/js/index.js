@@ -19027,8 +19027,8 @@ var signUp = (function (app) {
         var data = getFormInput();
         app.clients.api.signUp(data).then(function (res) {
             return app.clients.api.setCustomDns(res);
-        }).then(function (data) {
-            console.log(data);
+        }).then(function (res) {
+            console.log(res);
         }).catch(function (err) {
             console.log('front end htmll', err);
         });

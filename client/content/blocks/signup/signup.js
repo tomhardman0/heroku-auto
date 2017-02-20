@@ -33,12 +33,8 @@ export default (app) => {
         const data = getFormInput();
         app.clients.api.signUp(data)
             .then(res => app.clients.api.setCustomDns(res))
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.log('front end htmll', err);
-            });
+            .then((res) => console.log(res);)
+            .catch((err) => console.log('front end html', err));
     }
 
     form.addEventListener('submit', handleSubmission);
