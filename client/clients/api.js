@@ -7,16 +7,18 @@ export default class Api {
 
     signUp(data) {
         this.userInfo.email = data.email;
-        const options = this._getSignUpOptions();
-        options['body'] = data;
+        this.userInfo.appName = data.appName;
+        const options = this._getSignUpOptions(data);
         return this._getRequestPromise(options)
-            .then(this.signUpPoll.bind(this));
+            .then(this.signUpPoll.bind(this))
+            .catch(this._handleError);
     }
 
     signUpPoll(data) {
         const options = this._getSignUpPollOptions(data);
         return this._getRequestPromise(options)
-            .then(this._signUpPoll.bind(this));
+            .then(this._signUpPoll.bind(this))
+            .catch(this._handleError);
     };
 
     _signUpPoll(data){
@@ -30,8 +32,15 @@ export default class Api {
                 setTimeout(() => {
                     this.signUpPoll(data).then(resolve);
                 }, 1000);
+            } else {
+                reject(data);
             }
         });
+    }
+
+    setCustomDns(data) {
+        const options = this._getSetCustomDnsOptions(data);
+        return this._getRequestPromise(options);
     }
 
     _getRequestPromise(options) {
@@ -43,11 +52,12 @@ export default class Api {
         });
     }
 
-    _getSignUpOptions() {
+    _getSignUpOptions(data) {
         return {
             'method': 'POST',
             'url': '/signup',
-            'json': true
+            'json': true,
+            'body': data
         };
     }
 
@@ -65,9 +75,26 @@ export default class Api {
             'json': true,
             'body': {
                 'email': this.userInfo.email,
-                'url': `https://${data.app.name}.herokuapp.com`,
-                'appId': data.app.id
+                'appName': this.userInfo.appName,
+                'appId': data.appId
             }
         };
+    }
+
+    _getSetCustomDnsOptions(data) {
+        return {
+            'method': 'POST',
+            'url': '/setcustomdns',
+            'json': true,
+            'body': {
+                'appId': data.appId,
+                'appName': this.userInfo.appName
+            }
+        }
+    }
+
+    _handleError(err) {
+        err.error = true;
+        throw err;
     }
 }

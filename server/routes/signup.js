@@ -9,21 +9,34 @@ const signUpRoute = (app) => {
     		'APP_INIT_PASSWORD': req.body.password
         };
 
-        const user = await postgres.createUser({
-            'name': req.body.name,
-    		'appName': req.body.appName,
-    		'email': req.body.email,
-    		'active': false,
-            'url': null,
-            'appId': null
-        });
-        const data = await heroku.signUp(envOverrides);
+        let response;
 
-        const response = {
-            'status': data.status,
-            'build': data.build,
-            'id': data.id
-        };
+        try {
+            const user = await postgres.createUser({
+                'name': req.body.name,
+        		'appName': req.body.appName,
+        		'email': req.body.email,
+        		'active': false,
+                'url': null,
+                'appId': null
+            });
+        } catch (err) {
+            response = err;
+            response.error = true;
+        }
+
+        try {
+            const data = await heroku.signUp(envOverrides);
+            response = {
+                'status': data.status,
+                'build': data.build,
+                'id': data.id
+            };
+        } catch (err) {
+            response = err;
+            response.error = true;
+        }
+
         res.send(response);
     });
 

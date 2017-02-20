@@ -32,8 +32,12 @@ export default (app) => {
 
         const data = getFormInput();
         app.clients.api.signUp(data)
+            .then(res => app.clients.api.setCustomDns(res))
             .then((res) => {
-                console.log('final', res)
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log('front end htmll', err);
             });
     }
 
