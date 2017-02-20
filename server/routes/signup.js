@@ -6,7 +6,7 @@ const signUpRoute = (app) => {
         const envOverrides = {
     		'APP_NAME': req.body.appName,
     		'USER_EMAIL': req.body.email,
-    		'APP_INIT_PASSWORD': req.body.password
+    		'PASSWORD': req.body.password
         };
 
         let response;
