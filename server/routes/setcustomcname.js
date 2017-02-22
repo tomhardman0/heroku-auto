@@ -7,7 +7,7 @@ const setCustomCnameRoute = (app) => {
 
         try {
             const data = {
-                'clientIp': req.ip,
+                'clientIp': req.ip.replace('::ffff:' , ''),
                 'appName': req.body.appName
             };
             response = await namecheap.setCustomCname(data);
