@@ -30,10 +30,10 @@ class Namecheap extends ClientBase {
         return {
             'SLD': 'junip',
             'TLD': 'io',
-            'HostName': data.appName,
-            'RecordType': 'CNAME',
-            'Address': 'URL',
-            'TTL': '60'
+            'HostName1': data.appName,
+            'RecordType1': 'CNAME',
+            'Address1': 'URL',
+            'TTL1': '60'
         };
     }
 }
