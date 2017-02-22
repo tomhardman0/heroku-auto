@@ -13,11 +13,15 @@ const Heroku = require('./clients/heroku');
 const herokuConfig = require('./config/heroku');
 const Postgres = require('./clients/postgres');
 const postgresConfig = require('./config/postgres');
+const Namecheap = require('./clients/namecheap');
+const namecheapConfig = require('./config/namecheap');
 app.locals.clients = {
 	heroku: new Heroku(herokuConfig),
-	postgres: new Postgres(postgresConfig)
+	postgres: new Postgres(postgresConfig),
+	namecheap: new Namecheap(namecheapConfig)
 };
 
+// app.enable('trust proxy');
 app.use(ensureHttps);
 app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, '..', 'client', 'dist')));

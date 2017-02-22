@@ -1,7 +1,10 @@
+const ClientBase = require('./clientbase');
 const Sequelize = require('sequelize');
 
-class Postgres {
+class Postgres extends ClientBase {
     constructor(config) {
+        super();
+
         this.dbUrl = config.dbUrl;
         this.client = new Sequelize(this.dbUrl);
 

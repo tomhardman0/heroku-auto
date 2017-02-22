@@ -4,6 +4,7 @@ const signUpPoll = require('./signuppoll');
 const signUpComplete = require('./signupcomplete');
 const encryptRoute = require('./encrypt');
 const setCustomDnsRoute = require('./setcustomdns');
+const setCustomCnameRoute = require('./setcustomcname');
 
 const routes = [
   home,
@@ -11,7 +12,8 @@ const routes = [
   signUpPoll,
   signUpComplete,
   setCustomDnsRoute,
-  encryptRoute
+  encryptRoute,
+  setCustomCnameRoute
 ];
 
 module.exports = (app) => routes.forEach(route => route(app));

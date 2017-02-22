@@ -1,7 +1,9 @@
-const request = require('request');
+const ClientBase = require('./clientbase');
 
-class Heroku {
+class Heroku extends ClientBase {
     constructor(config) {
+        super();
+
         this.baseUrl = config.baseUrl;
         this.apiKey = config.apiKey;
         this.gitAccessToken = config.gitAccessToken;
@@ -20,15 +22,6 @@ class Heroku {
     setCustomDomain(data) {
         const options = this._getCustomDomainOptions(data);
         return this._getRequestPromise(options);
-    }
-
-    _getRequestPromise(options) {
-        return new Promise((resolve, reject) => {
-            request(options, (err, res, body) => {
-                if (err) reject(err);
-                else resolve(body);
-            });
-        });
     }
 
     _getSignUpPollOptions(pollId) {
@@ -64,7 +57,7 @@ class Heroku {
             'json': true,
             'method': 'POST',
             'body': {
-                'hostname': `${data.appName}.junip.io`
+                'hostname': `${data.appName.toLowerCase()}.junip.io`
             }
         }
     }

@@ -15,6 +15,7 @@ const setCustomDnsRoute = (app) => {
         } catch (err) {
             response = err;
             response.error = true;
+            console.error(response)
         }
 
         res.send(response);
