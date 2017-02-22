@@ -26,6 +26,20 @@ class Namecheap extends ClientBase {
         return this.api.apiCall('namecheap.domains.dns.setHosts', options);
     }
 
+    _getCurrentHosts(data) {
+        this.api.config.set('ClientIp', data.clientIp);
+        const options = this._getCurrentHostsOptions();
+
+        return this.api.apiCall('namecheap.domains.dns.getHosts', options);
+    }
+
+    _getCurrentHostsOptions() {
+        return {
+            'SLD': 'junip',
+            'TLD': 'io'
+        };
+    }
+
     _getSetCustomCnameOptions(data) {
         return {
             'SLD': 'junip',
