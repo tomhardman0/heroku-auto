@@ -21,34 +21,49 @@ class Namecheap extends ClientBase {
 
     setCustomCname(data) {
         this.api.config.set('ClientIp', data.clientIp);
-        const options = this._getSetCustomCnameOptions(data);
+        this.requestedCname = data;
+        return this._getCurrentHosts(data);
+    }
 
-        return this.api.apiCall('namecheap.domains.dns.setHosts', options);
+    _setCustomCname(data) {
+        Object.assign(data, this._getRequestOptionForHost(this.requestedCname, 1));
+        return this.api.apiCall('namecheap.domains.dns.setHosts', data);
     }
 
     _getCurrentHosts(data) {
         this.api.config.set('ClientIp', data.clientIp);
-        const options = this._getCurrentHostsOptions();
+        const options = this._getBasicRequestOptions();
 
-        return this.api.apiCall('namecheap.domains.dns.getHosts', options);
+        return this.api.apiCall('namecheap.domains.dns.getHosts', options)
+            .then(this._createHostsJson.bind(this))
+            .then(this._setCustomCname.bind(this));
     }
 
-    _getCurrentHostsOptions() {
+    _createHostsJson(data) {
+        const postData = this._getBasicRequestOptions();
+
+        const hosts = data.response[0].DomainDNSGetHostsResult[0].host;
+        hosts.forEach((host, index) => {
+            Object.assign(postData, this._getRequestOptionForHost(host.$, index+2));
+        })
+
+        return postData;
+    }
+
+    _getBasicRequestOptions() {
         return {
             'SLD': 'junip',
             'TLD': 'io'
         };
     }
 
-    _getSetCustomCnameOptions(data) {
-        return {
-            'SLD': 'junip',
-            'TLD': 'io',
-            'HostName1': data.appName,
-            'RecordType1': 'CNAME',
-            'Address1': data.dnsUrl,
-            'TTL1': '60'
-        };
+    _getRequestOptionForHost(host, index) {
+        const data = {};
+        data[`HostName${index}`] = host.Name || host.appName;
+        data[`RecordType${index}`] = host.Type || 'CNAME';
+        data[`Address${index}`] = host.Address || host.dnsUrl;
+        data[`TTL${index}`] = '60';
+        return data;
     }
 }
 

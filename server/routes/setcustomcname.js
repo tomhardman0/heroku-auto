@@ -8,9 +8,11 @@ const setCustomCnameRoute = (app) => {
         try {
             const data = {
                 'clientIp': req.ip.replace('::ffff:' , ''),
-                'appName': req.body.appName
+                'appName': req.body.appName,
+                'dnsUrl': req.body.dnsUrl
             };
-            response = await namecheap._getCurrentHosts(data);
+            const cname = await namecheap.setCustomCname(data);
+            response = { 'url': `http://${req.body.appName}.junip.io`};
         } catch (err) {
             response = err;
             response.error = true;

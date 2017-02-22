@@ -43,6 +43,11 @@ export default class Api {
         return this._getRequestPromise(options);
     }
 
+    setCustomCname(data) {
+        const options = this._getSetCustomCnameOptions(data);
+        return this._getRequestPromise(options);
+    }
+
     _getRequestPromise(options) {
         return new Promise((resolve, reject) => {
             request(options, (err, res, body) => {
@@ -50,6 +55,15 @@ export default class Api {
                 else resolve(body);
             });
         });
+    }
+
+    _getSetCustomCnameOptions(data) {
+        return {
+            'method': 'POST',
+            'url': '/setcustomcname',
+            'json': true,
+            'body': data
+        }
     }
 
     _getSignUpOptions(data) {

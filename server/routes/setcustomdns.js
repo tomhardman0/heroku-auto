@@ -6,11 +6,10 @@ const setCustomDnsRoute = (app) => {
         let response;
 
         try {
-            console.log('body for setcustomdns', req.body)
             const dns = await heroku.setCustomDomain(req.body);
-            console.log('dns response object', dns)
             response = {
-                'cname': dns.cname
+                'dnsUrl': dns.cname,
+                'appName': req.body.appName
             };
         } catch (err) {
             response = err;
