@@ -32,7 +32,7 @@ class Namecheap extends ClientBase {
             'TLD': 'io',
             'HostName1': data.appName,
             'RecordType1': 'CNAME',
-            'Address1': 'URL',
+            'Address1': data.dnsUrl,
             'TTL1': '60'
         };
     }
