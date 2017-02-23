@@ -1,5 +1,6 @@
 const isDev = process.env.NODE_ENV === 'development';
 if (isDev) require('dotenv').config();
+else require('newrelic')
 
 const path = require('path');
 const express = require('express');
