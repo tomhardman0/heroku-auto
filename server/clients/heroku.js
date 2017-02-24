@@ -57,7 +57,7 @@ class Heroku extends ClientBase {
             'json': true,
             'method': 'POST',
             'body': {
-                'hostname': `${data.appName.toLowerCase()}.junip.io`
+                'hostname': `${data.appName.toLowerCase()}.junipapp.io`
             }
         }
     }
