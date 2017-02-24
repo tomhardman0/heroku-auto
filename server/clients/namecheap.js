@@ -52,7 +52,7 @@ class Namecheap extends ClientBase {
 
     _getBasicRequestOptions() {
         return {
-            'SLD': 'junip',
+            'SLD': 'junipapp',
             'TLD': 'io'
         };
     }
