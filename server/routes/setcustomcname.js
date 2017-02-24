@@ -12,7 +12,7 @@ const setCustomCnameRoute = (app) => {
                 'dnsUrl': req.body.dnsUrl
             };
             const cname = await namecheap.setCustomCname(data);
-            response = { 'url': `http://${req.body.appName}.junip.io`};
+            response = { 'url': `http://${req.body.appName}.junipapp.io`};
         } catch (err) {
             response = err;
             response.error = true;
